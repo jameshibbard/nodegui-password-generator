@@ -5,8 +5,10 @@ const {
   QCheckBox,
   QLabel,
   QLineEdit,
+  QPlainTextEdit,
   QMainWindow,
   QPushButton,
+  QPushButtonEvents,
   QWidget,
 } = require('@nodegui/nodegui');
 
@@ -43,7 +45,7 @@ const checkbox = new QCheckBox();
 checkbox.setText('Include special characters in password');
 
 // Generated password output
-const passOutput = new QLineEdit();
+const passOutput = new QPlainTextEdit();
 passOutput.setObjectName('passOutput');
 passOutput.setReadOnly(true);
 
@@ -70,6 +72,15 @@ buttonRowLayout.addWidget(generateButton);
 buttonRowLayout.addWidget(copyButton);
 rootViewLayout.addWidget(buttonRow);
 
+// Event handling
+generateButton.addEventListener(QPushButtonEvents.clicked, () => {
+  passOutput.setPlainText(`
+    Checkbox checked: ${checkbox.isChecked()}
+    Num chars: ${ (numCharsInput.text() === '') ? 'empty' : numCharsInput.text()}
+  `);
+});
+
+// Styling
 const rootStyleSheet = `
   #rootView {
     padding: 5px;
