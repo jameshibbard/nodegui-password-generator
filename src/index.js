@@ -1,4 +1,5 @@
 /* globals require global */
+const _ = require('lodash');
 
 const {
   FlexLayout,
@@ -74,11 +75,35 @@ rootViewLayout.addWidget(buttonRow);
 
 // Event handling
 generateButton.addEventListener(QPushButtonEvents.clicked, () => {
-  passOutput.setPlainText(`
-    Checkbox checked: ${checkbox.isChecked()}
-    Num chars: ${ (numCharsInput.text() === '') ? 'empty' : numCharsInput.text()}
-  `);
+  passOutput.setPlainText(
+    generatePassword(checkbox.isChecked(), numCharsInput.text())
+  );
 });
+
+// Logic
+function getRamdomCharacter(min, max) {
+  return String.fromCharCode(_.random(min, max));
+}
+
+function generatePassword(withSpecialCharacters, length) {
+  if(isNaN(length)) return;
+
+  if(!withSpecialCharacters) {
+    return _.range(length).map(() => {
+      const rand = _.random(0, 2);
+
+      if(rand === 0){
+        return getRamdomCharacter(48, 57);
+      } else if(rand === 1) {
+        return getRamdomCharacter(65, 90);
+      } else {
+        return getRamdomCharacter(97, 122);
+      }
+    }).join('');
+  } else {
+    return _.range(length).map(() => getRamdomCharacter(33, 126)).join('');
+  }
+}
 
 // Styling
 const rootStyleSheet = `
