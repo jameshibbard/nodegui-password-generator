@@ -14,6 +14,7 @@ const {
 } = require('@nodegui/nodegui');
 
 const win = new QMainWindow();
+win.setWindowTitle('Password Generator');
 win.resize(400, 200);
 
 // Root view
