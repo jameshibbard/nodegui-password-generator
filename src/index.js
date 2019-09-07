@@ -13,6 +13,12 @@ const {
   QWidget,
 } = require('@nodegui/nodegui');
 
+const NUMBERS = _.range(0, 10);
+const ALPHABET_LOWER = _.range(97, 123).map(chr => String.fromCharCode(chr));
+const ALPHABET_UPPER = _.range(65, 91).map(chr => String.fromCharCode(chr));
+const ALL_POSSIBLE_CHARS = _.range(33, 127).map(chr => String.fromCharCode(chr));
+const CHARSETS = [ALL_POSSIBLE_CHARS, [...NUMBERS, ...ALPHABET_LOWER, ...ALPHABET_UPPER]];
+
 const win = new QMainWindow();
 win.setWindowTitle('Password Generator');
 win.resize(400, 200);
@@ -74,37 +80,25 @@ buttonRowLayout.addWidget(generateButton);
 buttonRowLayout.addWidget(copyButton);
 rootViewLayout.addWidget(buttonRow);
 
+// Logic
+function getCharSet(includeSpecialCharacters) {
+  return includeSpecialCharacters? CHARSETS[0] : CHARSETS[1];
+}
+
+function generatePassword(passwordLength, charSet) {
+  return _.range(passwordLength).map(() => _.sample(charSet)).join('');
+}
+
 // Event handling
 generateButton.addEventListener(QPushButtonEvents.clicked, () => {
+  const passwordLength = numCharsInput.text();
+  const includeSpecialChars = checkbox.isChecked();
+  const charSet = getCharSet(includeSpecialChars);
+
   passOutput.setPlainText(
-    generatePassword(checkbox.isChecked(), numCharsInput.text())
+    generatePassword(passwordLength, charSet)
   );
 });
-
-// Logic
-function getRamdomCharacter(min, max) {
-  return String.fromCharCode(_.random(min, max));
-}
-
-function generatePassword(withSpecialCharacters, length) {
-  if(isNaN(length)) return;
-
-  if(!withSpecialCharacters) {
-    return _.range(length).map(() => {
-      const rand = _.random(0, 2);
-
-      if(rand === 0){
-        return getRamdomCharacter(48, 57);
-      } else if(rand === 1) {
-        return getRamdomCharacter(65, 90);
-      } else {
-        return getRamdomCharacter(97, 122);
-      }
-    }).join('');
-  } else {
-    return _.range(length).map(() => getRamdomCharacter(33, 126)).join('');
-  }
-}
 
 // Styling
 const rootStyleSheet = `
