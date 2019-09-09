@@ -3,6 +3,7 @@ const _ = require('lodash');
 
 const {
   FlexLayout,
+  QApplication,
   QCheckBox,
   QLabel,
   QLineEdit,
@@ -72,6 +73,9 @@ generateButton.setObjectName('generateButton');
 const copyButton = new QPushButton();
 copyButton.setText('Copy to clipboard');
 
+// Clipboard
+const clipboard = QApplication.clipboard();
+
 // Add the widgets to the respective layouts
 fieldsetLayout.addWidget(numCharsRow);
 fieldsetLayout.addWidget(checkbox);
@@ -99,6 +103,10 @@ generateButton.addEventListener(QPushButtonEvents.clicked, () => {
   passOutput.setPlainText(
     generatePassword(passwordLength, charSet)
   );
+});
+
+copyButton.addEventListener(QPushButtonEvents.clicked, () => {
+  clipboard.setText(passOutput.toPlainText(), 0);
 });
 
 // Styling
