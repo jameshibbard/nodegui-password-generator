@@ -56,6 +56,7 @@ checkbox.setText('Include special characters in password');
 const passOutput = new QPlainTextEdit();
 passOutput.setObjectName('passOutput');
 passOutput.setReadOnly(true);
+passOutput.setWordWrapMode(3);
 
 // Button row
 const buttonRow = new QWidget();
