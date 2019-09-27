@@ -2,7 +2,7 @@
 
 A simple app built with [NodeGUI](https://github.com/nodegui/nodegui), to generate random passwords.
 
-![Screenshot of app](https://res.cloudinary.com/hibbard/image/upload/v1568030141/password-generator.png)
+![Screenshot of app](https://res.cloudinary.com/hibbard/image/upload/v1568030141/node-gui/password-generator.png)
 
 ## Requirements
 
