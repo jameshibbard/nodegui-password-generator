@@ -14,7 +14,7 @@ const {
   QWidget,
 } = require('@nodegui/nodegui');
 
-const NUMBERS = _.range(0, 10);
+const NUMBERS = _.range(0, 10).map(num => num.toString());
 const ALPHABET_LOWER = _.range(97, 123).map(chr => String.fromCharCode(chr));
 const ALPHABET_UPPER = _.range(65, 91).map(chr => String.fromCharCode(chr));
 const ALL_POSSIBLE_CHARS = _.range(33, 127).map(chr => String.fromCharCode(chr));
